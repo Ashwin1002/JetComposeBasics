@@ -41,6 +41,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetcomposebasics.ui.theme.JetComposeBasicsTheme
+import org.jetbrains.annotations.VisibleForTesting
 import java.text.NumberFormat
 
 class MainActivity : ComponentActivity() {
@@ -175,7 +176,8 @@ fun TipTimeLayoutPreview() {
     }
 }
 
-private fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boolean): String {
+@VisibleForTesting
+fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boolean): String {
     var tip = tipPercent / 100 * amount
     if (roundUp) {
         println("round up true")
