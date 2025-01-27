@@ -1,4 +1,4 @@
-package com.example.jetcomposebasics
+package com.example.jetcomposebasics.gridviewcard
 
 import android.os.Bundle
 import android.widget.GridView
@@ -38,9 +38,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.jetcomposebasics.gridviewcard.Topic
 import com.example.jetcomposebasics.ui.theme.JetComposeBasicsTheme
-import com.example.jetcomposebasics.gridviewcard.DataSource
+import com.example.jetcomposebasics.R
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
