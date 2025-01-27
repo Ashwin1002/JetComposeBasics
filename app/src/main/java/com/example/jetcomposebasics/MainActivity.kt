@@ -1,46 +1,37 @@
 package com.example.jetcomposebasics
 
 import android.os.Bundle
-import android.widget.GridView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.example.jetcomposebasics.gridviewcard.Topic
-import com.example.jetcomposebasics.ui.theme.JetComposeBasicsTheme
-import com.example.jetcomposebasics.gridviewcard.DataSource
+import com.example.jetcomposebasics.ui.theme.WoofTheme
+import com.example.jetcomposebasics.woofmaterial.data.Dog
+import com.example.jetcomposebasics.woofmaterial.data.Dogs.dogs
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -48,92 +39,154 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            JetComposeBasicsTheme {
+            WoofTheme() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    GridViewApp()
+                    WoofApp()
                 }
             }
         }
     }
 }
 
-
+/**
+ * Composable that displays an app bar and a list of dogs.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GridViewApp() {
-    val layoutDirection = LocalLayoutDirection.current
-    Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-            .padding(
-                start = WindowInsets.safeDrawing.asPaddingValues()
-                    .calculateStartPadding(layoutDirection),
-                end = WindowInsets.safeDrawing.asPaddingValues()
-                    .calculateEndPadding(layoutDirection),
-            ),
-    ) {
-        GridViewList(
-            topics = DataSource.topics
-        )
+fun WoofApp() {
 
-    }
-}
-
-@Composable
-fun GridViewList(topics: List<Topic>, modifier: Modifier = Modifier) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        items(topics.size) { index ->
-            GridViewCard(topic = topics[index], modifier = modifier)
+    Scaffold (
+        topBar = {
+            WoofTopAppBar()
         }
-    }
-}
+    ){ it ->
 
-@Composable
-fun GridViewCard(topic: Topic, modifier: Modifier = Modifier) {
-    Card(modifier = modifier, shape = RoundedCornerShape(size = 12.dp)) {
-        Row {
-            Image(
-                painter = painterResource(topic.imageResourceId),
-                contentDescription = stringResource(topic.stringResourceId),
-                modifier = Modifier.size(68.dp),
-                contentScale = ContentScale.Crop
-            )
-
-            Column (
-                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp).fillMaxWidth()
-            ){
-                Text(
-                    stringResource(topic.stringResourceId),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(bottom = 8.dp)
+        LazyColumn(contentPadding = it) {
+            items(dogs.size) {
+                DogItem(
+                    dog = dogs[it],
+                    modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
                 )
-                Row (
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Icon(
-                        painter = painterResource(R.drawable.percent),
-                        contentDescription = "icon",
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
-                    Text(
-                        text = "${topic.count}",
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
             }
         }
+    }
+}
+
+/**
+ * Composable that displays a list item containing a dog icon and their information.
+ *
+ * @param dog contains the data that populates the list item
+ * @param modifier modifiers to set to this composable
+ */
+@Composable
+fun DogItem(
+    dog: Dog,
+    modifier: Modifier = Modifier
+) {
+    Card(modifier = modifier) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(id = R.dimen.padding_small))
+        ) {
+            DogIcon(dog.imageResourceId)
+            DogInformation(dog.name, dog.age)
+        }
+    }
+}
+
+/**
+ * Composable that displays a photo of a dog.
+ *
+ * @param dogIcon is the resource ID for the image of the dog
+ * @param modifier modifiers to set to this composable
+ */
+@Composable
+fun DogIcon(
+    @DrawableRes dogIcon: Int,
+    modifier: Modifier = Modifier
+) {
+    Image(
+        modifier = modifier
+            .size(dimensionResource(id = R.dimen.image_size))
+            .padding(dimensionResource(id = R.dimen.padding_small))
+            .clip(MaterialTheme.shapes.small),
+        painter = painterResource(dogIcon),
+
+        // Content Description is not needed here - image is decorative, and setting a null content
+        // description allows accessibility services to skip this element during navigation.
+
+        contentDescription = null
+    )
+}
+
+/**
+ * Composable that displays a dog's name and age.
+ *
+ * @param dogName is the resource ID for the string of the dog's name
+ * @param dogAge is the Int that represents the dog's age
+ * @param modifier modifiers to set to this composable
+ */
+@Composable
+fun DogInformation(
+    @StringRes dogName: Int,
+    dogAge: Int,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(dogName),
+            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_small))
+        )
+        Text(
+            text = stringResource(R.string.years_old, dogAge),
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WoofTopAppBar(modifier: Modifier = Modifier) {
+    CenterAlignedTopAppBar(
+        modifier = modifier,
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+
+            ) {
+                Image(
+                    modifier = Modifier
+                        .size(dimensionResource(id = R.dimen.image_size))
+                        .padding(dimensionResource(id = R.dimen.padding_small)),
+                    painter = painterResource(R.drawable.ic_woof_logo),
+                    contentDescription = null
+                )
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.displayLarge
+                )
+            }
+        }
+    )
+}
+
+/**
+ * Composable that displays what the UI of the app looks like in light theme in the design tab.
+ */
+@Preview
+@Composable
+fun WoofPreview() {
+    WoofTheme(darkTheme = false) {
+        WoofApp()
     }
 }
 
 @Preview
 @Composable
-private fun GridViewAppPreview() {
-    GridViewCard(Topic(R.string.architecture, 321, R.drawable.image1))
+fun WoofDarkThemePreview() {
+    WoofTheme(darkTheme = true) {
+        WoofApp()
+    }
 }

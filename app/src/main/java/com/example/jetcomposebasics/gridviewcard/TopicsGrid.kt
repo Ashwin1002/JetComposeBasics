@@ -38,8 +38,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.jetcomposebasics.ui.theme.JetComposeBasicsTheme
 import com.example.jetcomposebasics.R
+import com.example.jetcomposebasics.ui.theme.WoofTheme
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            JetComposeBasicsTheme {
+            WoofTheme() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {

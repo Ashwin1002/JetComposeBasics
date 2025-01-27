@@ -39,7 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.jetcomposebasics.ui.theme.JetComposeBasicsTheme
+import com.example.jetcomposebasics.ui.theme.WoofTheme
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            JetComposeBasicsTheme {
+            WoofTheme() {
                 Scaffold (
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
