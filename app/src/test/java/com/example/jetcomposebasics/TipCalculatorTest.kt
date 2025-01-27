@@ -1,5 +1,6 @@
 package com.example.jetcomposebasics
 
+import com.example.jetcomposebasics.tipcalculator.calculateTip
 import org.junit.Test
 import org.junit.Rule
 //import androidx.compose.ui.test.junit4.createComposeRule
