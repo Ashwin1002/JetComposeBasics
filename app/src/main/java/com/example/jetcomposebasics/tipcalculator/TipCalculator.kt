@@ -41,7 +41,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetcomposebasics.R
-import com.example.jetcomposebasics.ui.theme.WoofTheme
+import com.example.jetcomposebasics.ui.theme.JetComposeBasicsTheme
 import org.jetbrains.annotations.VisibleForTesting
 import java.text.NumberFormat
 import kotlin.math.ceil
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            WoofTheme() {
+            JetComposeBasicsTheme() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
@@ -173,7 +173,7 @@ fun RoundTheTipRow(
 @Preview(showBackground = true)
 @Composable
 fun TipTimeLayoutPreview() {
-    WoofTheme() {
+    JetComposeBasicsTheme() {
         TipTimeLayout()
     }
 }

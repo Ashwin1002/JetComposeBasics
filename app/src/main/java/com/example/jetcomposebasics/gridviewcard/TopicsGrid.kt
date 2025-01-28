@@ -39,25 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetcomposebasics.R
-import com.example.jetcomposebasics.ui.theme.WoofTheme
-
-class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            WoofTheme() {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    GridViewApp()
-                }
-            }
-        }
-    }
-}
-
+import com.example.jetcomposebasics.ui.theme.JetComposeBasicsTheme
 
 @Composable
 fun GridViewApp() {

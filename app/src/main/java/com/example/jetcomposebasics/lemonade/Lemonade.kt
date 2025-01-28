@@ -39,47 +39,39 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.jetcomposebasics.ui.theme.WoofTheme
 
-class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            WoofTheme() {
-                Scaffold (
-                    modifier = Modifier.fillMaxSize(),
-                    topBar = {
-                        CenterAlignedTopAppBar(
-                            colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = Color.Yellow,
-                                titleContentColor = Color.Black,
-                            ),
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun LemonadeApp() {
+    Scaffold (
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Yellow,
+                    titleContentColor = Color.Black,
+                ),
 
-                            title = {
-                                Text(
-                                    stringResource(R.string.lemonade),
-                                    fontWeight = FontWeight.W600,
-                                    textAlign = TextAlign.Center
-                                )
-                            }
-                        )
-                    }
-                ) {
-                        innerPadding ->
-                    Surface(
-                        modifier = Modifier.padding(innerPadding),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        Lemonade()
-                    }
+                title = {
+                    Text(
+                        stringResource(R.string.lemonade),
+                        fontWeight = FontWeight.W600,
+                        textAlign = TextAlign.Center
+                    )
                 }
-            }
+            )
+        }
+    ) {
+            innerPadding ->
+        Surface(
+            modifier = Modifier.padding(innerPadding),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            Lemonade()
         }
     }
 }
-
 
 @Preview
 @Composable

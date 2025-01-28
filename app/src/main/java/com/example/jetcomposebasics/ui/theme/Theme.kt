@@ -85,7 +85,7 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun WoofTheme(
+fun JetComposeBasicsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
@@ -103,9 +103,12 @@ fun WoofTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            setUpEdgeToEdge(view, darkTheme)
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.background.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
+
 
     MaterialTheme(
         colorScheme = colorScheme,
